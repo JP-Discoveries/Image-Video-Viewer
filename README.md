@@ -1,6 +1,6 @@
 # Image & Video Viewer — JavaFX
 
-A Java/JavaFX port of the Image & Video Viewer, matching the full feature-set of the Python/PySide6 original.
+A fast image and video viewer for Windows, built with JavaFX — VLC-powered playback, RAW/HEIC support, Whisper subtitle generation, and translation.
 
 <p align="center"><img src="docs/screenshot.png" width="850" alt="Image & Video Viewer"></p>
 
