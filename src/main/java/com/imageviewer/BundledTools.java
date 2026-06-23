@@ -81,11 +81,23 @@ public final class BundledTools {
     // ── Python ────────────────────────────────────────────────────────────────
 
     /**
-     * Path to python.exe — the bundled venv's interpreter takes priority.
-     * Falls back to the system {@code python} command.
+     * Path to python.exe — the bundled interpreter takes priority, then the
+     * system {@code python} command.
+     *
+     * Two bundled layouts are supported: the python.org <em>embeddable</em>
+     * distribution puts {@code python.exe} at {@code python_env\python.exe},
+     * while a classic venv puts it under {@code python_env\Scripts\}.
      */
     public static String python() {
-        return resolve("python_env", "Scripts" + java.io.File.separator + "python.exe", "python");
+        Path dir = appDir();
+        if (dir != null) {
+            Path env = dir.resolve("python_env");
+            Path embedded = env.resolve("python.exe");                       // embeddable layout
+            if (Files.exists(embedded)) return embedded.toAbsolutePath().toString();
+            Path venv = env.resolve("Scripts").resolve("python.exe");        // venv layout
+            if (Files.exists(venv)) return venv.toAbsolutePath().toString();
+        }
+        return "python";
     }
 
     // ── Whisper model directory ───────────────────────────────────────────────

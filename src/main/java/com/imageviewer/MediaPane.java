@@ -273,7 +273,7 @@ public class MediaPane extends StackPane {
     /** Incremented each time a new video loads; used to discard stale Whisper callbacks. */
     private volatile long             ccGenToken   = 0;
     /** Whisper model selected by the user — persists for the session. */
-    private String                    whisperModel = "small";
+    private String                    whisperModel = "base";   // matches the bundled model
     /** True while an Argos Translate background job is running. */
     private volatile boolean          translating  = false;
 
@@ -2837,6 +2837,11 @@ public class MediaPane extends StackPane {
 
             ProcessBuilder pb = new ProcessBuilder(cmd);
             pb.redirectErrorStream(true);
+            // Point faster-whisper at the bundled model cache (HF hub layout) when
+            // present, so the pre-downloaded model is used instead of fetching it.
+            Path bundledModels = BundledTools.whisperModelDir();
+            if (bundledModels != null)
+                pb.environment().put("HF_HUB_CACHE", bundledModels.toAbsolutePath().toString());
             try {
                 Process proc = pb.start();
                 StringBuilder log = new StringBuilder();

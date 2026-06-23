@@ -142,52 +142,15 @@ if "%FFMPEG_SRC%"=="" (
     echo     ffmpeg bundled successfully.
 )
 
-:: ── Step 2e: Bundle Python environment (argostranslate + whisper) ─────────────
+:: ── Step 2e: Bundle self-contained Python (whisper + argostranslate + model) ──
+:: Uses the python.org embeddable distribution so the bundled Python is portable
+:: (runs on machines with no Python installed). See build_portable_python.ps1.
 echo.
-echo [2e/4] Building Python environment (this may take several minutes)...
-echo        Installing: argostranslate, langdetect, faster-whisper (GPU/CPU)
-
-set PYTHON=python
-where python >nul 2>&1
+echo [2e/4] Building portable Python environment (this may take several minutes)...
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0build_portable_python.ps1"
 if errorlevel 1 (
-    echo  WARNING: Python not found. Translation and Whisper caption features will not work.
-    echo           Install Python 3.11+ from https://python.org/
-    goto :skip_python
+    echo  WARNING: Portable Python build failed. Whisper/translation will not be bundled.
 )
-
-if exist "target\app\python_env" rmdir /s /q "target\app\python_env"
-call python -m venv --copies "target\app\python_env"
-if errorlevel 1 (
-    echo  WARNING: Failed to create Python venv. Skipping Python bundling.
-    goto :skip_python
-)
-
-call "target\app\python_env\Scripts\pip" install --upgrade pip --quiet
-call "target\app\python_env\Scripts\pip" install argostranslate langdetect --quiet
-:: faster-whisper uses CTranslate2 — bundles its own GPU runtime, no separate torch needed
-call "target\app\python_env\Scripts\pip" install faster-whisper --quiet
-if errorlevel 1 (
-    echo  WARNING: faster-whisper failed to install. Whisper caption generation will not work.
-) else (
-    echo     Python environment ready.
-)
-
-:: ── Step 2f: Pre-download Whisper small model (faster-whisper format) ─────────
-echo.
-echo [2f/4] Pre-downloading Whisper small model (~244 MB)...
-if not exist "target\app\whisper_models" mkdir "target\app\whisper_models"
-call "target\app\python_env\Scripts\python" -c "from faster_whisper import WhisperModel; WhisperModel('small', download_root='target/app/whisper_models'); print('Model ready.')" 2>nul
-if errorlevel 1 (
-    :: Fallback: try openai-whisper format
-    call "target\app\python_env\Scripts\python" -c "import whisper; whisper.load_model('small', download_root='target/app/whisper_models'); print('Model ready.')" 2>nul
-)
-if errorlevel 1 (
-    echo  WARNING: Whisper model download failed. It will download automatically on first use.
-) else (
-    echo     Whisper small model bundled successfully.
-)
-
-:skip_python
 
 :: ── Step 3: Run jpackage ─────────────────────────────────────────────────────
 echo.

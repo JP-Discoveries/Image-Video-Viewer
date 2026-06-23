@@ -189,10 +189,26 @@ All optional — the viewer works without them (with reduced format support).
 # Fat JAR (still requires JRE with JavaFX on module-path)
 mvn package
 # Output: target/image-video-viewer-1.0.0-fat.jar
-
-# Self-contained installer (JDK 17+ jpackage)
-# See jpackage docs for bundling the JavaFX runtime
 ```
+
+### Self-contained Windows app-image (jpackage)
+
+The portable build bundles a JRE, JavaFX, VLC, ffmpeg, ImageMagick, and a
+fully self-contained Python runtime (faster-whisper + Argos Translate + a
+pre-downloaded Whisper model). Run these from the project root on Windows:
+
+```powershell
+mvn package                  # build the fat JAR + stage JavaFX modules
+./stage_and_package.ps1      # bundle VLC/ffmpeg/ImageMagick, run jpackage
+./build_portable_python.ps1  # add the embeddable Python + Whisper/Argos + model
+./repackage_only.ps1         # re-run jpackage to fold Python into the app-image
+# Output: target/Image Video Viewer/  (run "Image Video Viewer.exe")
+```
+
+`build_portable_python.ps1` uses the python.org **embeddable** distribution, so
+the bundled Python is relocatable and works on machines with no Python installed.
+The native tools (VLC, ffmpeg, ImageMagick) are bundled from this build machine,
+so install them first to include them.
 
 ---
 
