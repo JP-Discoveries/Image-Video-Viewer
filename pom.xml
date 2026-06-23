@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.imageviewer</groupId>
+  <artifactId>image-video-viewer</artifactId>
+  <version>1.0.0</version>
+  <packaging>jar</packaging>
+  <name>Image &amp; Video Viewer</name>
+
+  <properties>
+    <maven.compiler.release>21</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <javafx.version>21.0.2</javafx.version>
+    <jackson.version>2.17.1</jackson.version>
+  </properties>
+
+  <dependencies>
+    <!-- JavaFX core -->
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-controls</artifactId>
+      <version>${javafx.version}</version>
+    </dependency>
+    <!-- JavaFX media: used as fallback video player when VLC is not installed -->
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-media</artifactId>
+      <version>${javafx.version}</version>
+    </dependency>
+    <!-- VLCJ — libVLC Java bindings for full-codec video playback + alpha channel support -->
+    <dependency>
+      <groupId>uk.co.caprica</groupId>
+      <artifactId>vlcj</artifactId>
+      <version>4.12.1</version>
+    </dependency>
+    <!-- JSON config persistence -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
+    <!-- EXIF / metadata reader for image info dialog -->
+    <dependency>
+      <groupId>com.drewnoakes</groupId>
+      <artifactId>metadata-extractor</artifactId>
+      <version>2.19.0</version>
+    </dependency>
+
+    <!-- JavaCPP FFmpeg: direct library calls replace the FFmpeg subprocess pipe for alpha decode -->
+    <dependency>
+      <groupId>org.bytedeco</groupId>
+      <artifactId>javacpp</artifactId>
+      <version>1.5.10</version>
+    </dependency>
+    <dependency>
+      <groupId>org.bytedeco</groupId>
+      <artifactId>ffmpeg</artifactId>
+      <version>6.1.1-1.5.10</version>
+    </dependency>
+    <dependency>
+      <groupId>org.bytedeco</groupId>
+      <artifactId>ffmpeg</artifactId>
+      <version>6.1.1-1.5.10</version>
+      <classifier>windows-x86_64</classifier>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <!-- Compiler -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+        <configuration>
+          <release>17</release>
+        </configuration>
+      </plugin>
+
+      <!-- JavaFX: mvn javafx:run -->
+      <plugin>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-maven-plugin</artifactId>
+        <version>0.0.8</version>
+        <configuration>
+          <mainClass>com.imageviewer/com.imageviewer.App</mainClass>
+          <options>
+            <!-- allow reflective access used by Jackson -->
+            <option>--add-opens=java.base/java.lang=com.fasterxml.jackson.databind</option>
+          </options>
+          <modules>
+            <module>javafx.controls</module>
+            <module>javafx.graphics</module>
+            <module>javafx.media</module>
+          </modules>
+        </configuration>
+      </plugin>
+
+      <!-- Stage JavaFX win JARs into target/javafx-mods/ for jpackage -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.6.1</version>
+        <executions>
+          <execution>
+            <id>copy-javafx-win</id>
+            <phase>package</phase>
+            <goals><goal>copy</goal></goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.openjfx</groupId><artifactId>javafx-base</artifactId>
+                  <version>${javafx.version}</version><classifier>win</classifier>
+                  <destFileName>javafx-base.jar</destFileName>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.openjfx</groupId><artifactId>javafx-controls</artifactId>
+                  <version>${javafx.version}</version><classifier>win</classifier>
+                  <destFileName>javafx-controls.jar</destFileName>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.openjfx</groupId><artifactId>javafx-graphics</artifactId>
+                  <version>${javafx.version}</version><classifier>win</classifier>
+                  <destFileName>javafx-graphics.jar</destFileName>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.openjfx</groupId><artifactId>javafx-media</artifactId>
+                  <version>${javafx.version}</version><classifier>win</classifier>
+                  <destFileName>javafx-media.jar</destFileName>
+                </artifactItem>
+              </artifactItems>
+              <outputDirectory>${project.build.directory}/javafx-mods</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Fat JAR: mvn package then java -jar target/image-video-viewer-1.0.0-fat.jar -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.5.2</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals><goal>shade</goal></goals>
+            <configuration>
+              <finalName>${project.artifactId}-${project.version}-fat</finalName>
+              <shadedArtifactAttached>true</shadedArtifactAttached>
+              <createDependencyReducedPom>false</createDependencyReducedPom>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                  </excludes>
+                </filter>
+                <!-- Exclude JavaFX from fat JAR: jpackage provides it via module-path.
+                     Split-package (classpath + module-path) kills the app silently. -->
+                <filter>
+                  <artifact>org.openjfx:*</artifact>
+                  <excludes>
+                    <exclude>**</exclude>
+                  </excludes>
+                </filter>
+              </filters>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>com.imageviewer.App</mainClass>
+                </transformer>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

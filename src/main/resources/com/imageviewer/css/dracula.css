@@ -1,0 +1,253 @@
+/* ─────────────────────────────────────────────────────────────────────────── */
+/*  Dracula theme — dark purple/pink palette                                    */
+/*  https://draculatheme.com/                                                   */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+.root {
+    -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    -fx-font-size: 12px;
+    -fx-base:                   #282a36;
+    -fx-background:             #282a36;
+    -fx-control-inner-background: #44475a;
+    -fx-accent:                 #bd93f9;
+    -fx-focus-color:            #ff79c6;
+    -fx-text-fill:              #f8f8f2;
+}
+
+/* ── Labels ──────────────────────────────────────────────────────────────── */
+.label {
+    -fx-text-fill: #f8f8f2;
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────────────── */
+.button, .toolbar-btn {
+    -fx-background-color: #44475a;
+    -fx-text-fill:        #f8f8f2;
+    -fx-border-color:     #6272a4;
+    -fx-border-radius:    4;
+    -fx-background-radius: 4;
+    -fx-cursor:           hand;
+    -fx-padding:          4 10 4 10;
+}
+.button:hover, .toolbar-btn:hover {
+    -fx-text-fill:        #f8f8f2;
+    -fx-background-color: #6272a4;
+    -fx-border-color:     #bd93f9;
+}
+.button:pressed, .toolbar-btn:pressed {
+    -fx-background-color: #bd93f9;
+    -fx-text-fill:        #282a36;
+}
+.toolbar-btn:selected {
+    -fx-background-color: transparent;
+    -fx-text-fill:        #d4b0ff;
+    -fx-border-color:     #bd93f9;
+    -fx-border-width:     2;
+}
+.toolbar-btn:selected:hover {
+    -fx-background-color: rgba(189,147,249,0.15);
+    -fx-border-color:     #d4b0ff;
+}
+.button:focused {
+    -fx-border-color: #ff79c6;
+}
+.toolbar-btn:focused {
+    -fx-border-color: #6272a4;   /* suppress focus ring on toolbar buttons */
+}
+
+/* ── ToolBar ──────────────────────────────────────────────────────────────── */
+.tool-bar, .main-toolbar {
+    -fx-background-color: #44475a;
+    -fx-border-color:     transparent transparent #6272a4 transparent;
+    -fx-padding:          4 8 4 8;
+    -fx-spacing:          4;
+}
+
+/* ── Title bar (custom UNDECORATED window chrome) ────────────────────────── */
+.title-bar {
+    -fx-background-color: #44475a;
+    -fx-border-color:     transparent;
+    -fx-padding:          0;
+}
+.wm-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill:        #f8f8f2;
+    -fx-border-color:     transparent;
+    -fx-background-radius: 0;
+    -fx-cursor:           hand;
+    -fx-font-size:        13px;
+    -fx-padding:          0;
+}
+.wm-btn:hover  { -fx-background-color: rgba(255,255,255,0.12); }
+.wm-close:hover { -fx-background-color: #c0392b; -fx-text-fill: white; }
+
+/* ── Toolbar section groups ───────────────────────────────────────────────── */
+.toolbar-group {
+    -fx-background-color:  rgba(0,0,0,0.22);
+    -fx-background-radius: 5;
+    -fx-border-color:      rgba(0,0,0,0.30);
+    -fx-border-radius:     5;
+    -fx-border-width:      1;
+    -fx-padding:           2 4 2 4;
+    -fx-spacing:           2;
+    -fx-alignment:         center-left;
+}
+
+/* ── Status bar ───────────────────────────────────────────────────────────── */
+.status-bar {
+    -fx-background-color: #44475a;
+    -fx-border-color:     #6272a4 transparent transparent transparent;
+    -fx-text-fill:        #8be9fd;
+    -fx-font-size:        11px;
+}
+
+/* ── Thumbnail panel ─────────────────────────────────────────────────────── */
+.thumbnail-panel {
+    -fx-background-color: #21222c;
+    -fx-border-color:     transparent #6272a4 transparent transparent;
+}
+.panel-header {
+    -fx-text-fill:        #bd93f9;
+    -fx-background-color: #1e1f29;
+    -fx-border-color:     transparent transparent #44475a transparent;
+}
+
+/* ── ListView ────────────────────────────────────────────────────────────── */
+.list-view {
+    -fx-background-color: #21222c;
+    -fx-border-color:     transparent;
+}
+.list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill:        #f8f8f2;
+    -fx-border-color:     transparent transparent #2d2e3b transparent;
+}
+.list-cell:hover {
+    -fx-background-color: #2d2e3b;
+}
+.list-cell:selected {
+    -fx-background-color: #44476a;
+    -fx-text-fill:        #f8f8f2;
+}
+.list-cell:selected:focused {
+    -fx-background-color: #6272a4;
+}
+
+/* ── Sliders ─────────────────────────────────────────────────────────────── */
+.slider .track {
+    -fx-background-color: #6272a4;
+    -fx-background-radius: 2;
+}
+.slider .thumb {
+    -fx-background-color: #bd93f9;
+    -fx-background-radius: 6;
+    -fx-pref-width:  12;
+    -fx-pref-height: 12;
+}
+.seek-slider .thumb { -fx-pref-width: 14; -fx-pref-height: 14; }
+
+/* ── ScrollBars ───────────────────────────────────────────────────────────── */
+.scroll-bar {
+    -fx-background-color: #21222c;
+}
+.scroll-bar:vertical   { -fx-pref-width:  12px; }
+.scroll-bar:horizontal { -fx-pref-height: 12px; }
+.scroll-bar .thumb {
+    -fx-background-color: #6272a4;
+    -fx-background-radius: 4;
+}
+.scroll-bar .thumb:hover { -fx-background-color: #bd93f9; }
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: #21222c;
+    -fx-padding:          2;
+}
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-background-color: #6272a4;
+}
+
+/* ── ScrollPane ───────────────────────────────────────────────────────────── */
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+/* ── SplitPane divider ────────────────────────────────────────────────────── */
+.split-pane {
+    -fx-background-color: #191a23;
+    -fx-padding: 0;
+}
+.split-pane-divider {
+    -fx-background-color: #6272a4;
+    -fx-padding: 0 1 0 1;
+    -fx-cursor: h-resize;
+}
+
+/* ── Tooltip ──────────────────────────────────────────────────────────────── */
+.tooltip {
+    -fx-background-color: #282a36;
+    -fx-text-fill:        #f8f8f2;
+    -fx-border-color:     #6272a4;
+    -fx-border-radius:    4;
+    -fx-background-radius: 4;
+}
+
+/* ── ContextMenu / MenuBar ────────────────────────────────────────────────── */
+.menu-bar {
+    -fx-background-color: #44475a;
+}
+.menu-bar .label { -fx-text-fill: #f8f8f2; }
+.menu { -fx-background-color: #44475a; }
+.menu-item {
+    -fx-background-color: #44475a;
+}
+.menu-item .label { -fx-text-fill: #f8f8f2; }
+.menu-item:focused {
+    -fx-background-color: #bd93f9;
+}
+.menu-item:focused .label { -fx-text-fill: #282a36; }
+.context-menu {
+    -fx-background-color: #44475a;
+    -fx-border-color:     #6272a4;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 8, 0, 2, 2);
+}
+
+/* ── Separator ────────────────────────────────────────────────────────────── */
+.separator .line { -fx-border-color: #6272a4; }
+
+/* ── Time labels (video controls) ────────────────────────────────────────── */
+.time-label {
+    -fx-text-fill: #8be9fd;
+    -fx-font-size: 11px;
+    -fx-min-width: 42px;
+}
+
+/* ── Icon buttons in video controls ──────────────────────────────────────── */
+.ctrl-btn, .icon-btn, .play-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill:        #f8f8f2;
+    -fx-border-color:     transparent;
+    -fx-font-size:        13px;
+    -fx-padding:          2 6 2 6;
+    -fx-cursor:           hand;
+}
+.ctrl-btn:hover { -fx-background-color: rgba(189,147,249,0.18); -fx-background-radius: 4; }
+.play-btn { -fx-font-size: 15px; }
+
+/* ── Media pane background ────────────────────────────────────────────────── */
+.media-pane {
+    -fx-background-color: #191a23;
+}
+
+
+/* ── Spinner ─────────────────────────────────────────────────────────────── */
+.spinner { -fx-pref-height: 26px; }
+.spinner .text-field { -fx-font-size: 11px; -fx-padding: 2 4 2 4; }
+
+/* ── Slideshow progress bar ───────────────────────────────────────────────── */
+.slideshow-progress { -fx-pref-height: 7px; -fx-min-height: 7px; -fx-max-height: 7px; }
+.slideshow-progress .track { -fx-background-radius: 3; -fx-background-insets: 0; }
+.slideshow-progress .bar   { -fx-background-radius: 3; -fx-background-insets: 0; }

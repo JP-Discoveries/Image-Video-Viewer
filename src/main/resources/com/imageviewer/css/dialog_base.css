@@ -1,0 +1,61 @@
+/* ─────────────────────────────────────────────────────────────────────────── */
+/*  Dialog / Alert overrides                                                    */
+/*  Applied on top of the active theme.  Uses CSS lookup values (-fx-base,      */
+/*  -fx-background, -fx-text-base-color) so it works with every theme.          */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+.dialog-pane {
+    -fx-background-color: -fx-background;
+    -fx-padding: 0;
+    -fx-border-color: derive(-fx-base, 20%);
+    -fx-border-width: 1;
+}
+
+/* Header area (shows icon + title text in Alerts with AlertType != NONE) */
+.dialog-pane > .header-panel {
+    -fx-background-color: derive(-fx-base, 10%);
+    -fx-padding: 12 16 12 16;
+}
+.dialog-pane > .header-panel .label {
+    -fx-text-fill: -fx-text-base-color;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* Main content area */
+.dialog-pane > .content {
+    -fx-background-color: -fx-background;
+    -fx-padding: 12 16 8 16;
+}
+.dialog-pane > .content.label,
+.dialog-pane:no-header .content.label {
+    -fx-text-fill: -fx-text-base-color;
+    -fx-padding: 12 16 8 16;
+}
+
+/* Expandable content (e.g. stack trace section) */
+.dialog-pane > .expandable-content {
+    -fx-background-color: -fx-background;
+    -fx-padding: 0 16 8 16;
+}
+
+/* Button bar */
+.dialog-pane > .button-bar > .container {
+    -fx-background-color: -fx-background;
+    -fx-padding: 4 8 10 8;
+}
+
+/* Text fields inside dialogs (TextInputDialog) */
+.dialog-pane .text-field {
+    -fx-background-color: -fx-control-inner-background;
+    -fx-text-fill: -fx-text-base-color;
+    -fx-border-color: derive(-fx-base, 30%);
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+}
+
+/* ChoiceBox / ComboBox inside dialogs */
+.dialog-pane .choice-box,
+.dialog-pane .combo-box {
+    -fx-background-color: -fx-control-inner-background;
+}

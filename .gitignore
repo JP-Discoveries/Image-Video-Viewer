@@ -1,0 +1,30 @@
+# Maven build output
+target/
+
+# Bundled Apache Maven (reproducible via Setup_Maven.bat)
+maven/
+
+# jpackage / staged app bundle output
+/Image Video Viewer/
+
+# Claude Code local config (machine-specific paths)
+.claude/
+
+# Eclipse / IDE local state
+.settings/
+.classpath
+.project
+.vs/
+.idea/
+*.user
+*.iml
+
+# Logs
+run_log.txt
+*.log
+
+# Windows shell artifacts
+*.lnk
+desktop.ini
+Thumbs.db
+ehthumbs.db
