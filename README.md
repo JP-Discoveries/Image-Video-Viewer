@@ -193,3 +193,12 @@ mvn package
 # Self-contained installer (JDK 17+ jpackage)
 # See jpackage docs for bundling the JavaFX runtime
 ```
+
+---
+
+## License
+
+Licensed under the **GNU General Public License v3.0** — see [LICENSE](LICENSE).
+
+GPLv3 is used because the app links against and redistributes
+[VLCJ](https://github.com/caprica/vlcj), which is GPLv3-licensed.
