@@ -2,6 +2,8 @@
 
 A Java/JavaFX port of the Image & Video Viewer, matching the full feature-set of the Python/PySide6 original.
 
+<p align="center"><img src="docs/screenshot.png" width="850" alt="Image & Video Viewer"></p>
+
 ## Download
 
 **[⬇ Download the latest release](https://github.com/JP-Discoveries/Image-Video-Viewer/releases/latest)** (Windows 64-bit)
