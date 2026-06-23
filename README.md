@@ -2,6 +2,17 @@
 
 A Java/JavaFX port of the Image & Video Viewer, matching the full feature-set of the Python/PySide6 original.
 
+## Download
+
+**[⬇ Download the latest release](https://github.com/JP-Discoveries/Image-Video-Viewer/releases/latest)** (Windows 64-bit)
+
+Grab the `win-x64` zip, extract it anywhere, and run **`Image Video Viewer.exe`** —
+no installation, and no separate Java or Python needed. The portable build bundles
+the JRE + JavaFX, VLC, ffmpeg, ImageMagick (RAW/HEIC), and a self-contained Python
+runtime for Whisper caption generation and Argos subtitle translation.
+
+To build from source instead, see [Building a Distribution](#building-a-distribution).
+
 ## Requirements
 
 | Tool | Version |
